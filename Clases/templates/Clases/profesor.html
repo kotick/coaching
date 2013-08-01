@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block MAIN %}
+              <div class="span12">
+                <table class="table table-hover table-condensed">
+                  <thead> 
+                  <tr>
+                  <td>Foto</td>
+                  <td>Nombre profesor</td>
+                  <td>Idioma</td>
+                  <td>Pruebalo!</td>
+                  </tr>
+                  </thead>                   
+                  <tbody>
+                    <h3>Si hay cursos</h3>
+                      <div class=“cursos”>
+                        <tr>
+                        <td><!-- img alt="80x80" class="img-rounded" id="me" src="{{STATIC_URL}}/skypi.jpg" --> </td>
+                        <td>{{curso.profesor.user.username}}</td>
+                        <td>{{curso.idioma}}</td>
+                        <td><a href="#myModal" role="button" class="btn" data-toggle="modal">Contratar</a></td>                    
+                        </tr>
+                      </div>
+                    <h3>No hay cursos</h3>
+                  </tbody>
+                </table>
+                </div>
+{% endblock %}
