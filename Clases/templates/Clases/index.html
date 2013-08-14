@@ -1,75 +1,69 @@
 {% extends 'base.html' %}
 {% block MAIN %}
+
+  <div class="row-fluid">
+    <div class="span12">
+      <div class = "fondo_inicio">
+        <div class="row-fluid">
+          <div class="span6">
+    <!--           <iframe src="http://www.youtube.com/embed/0VNBhxwo6yQ?feature=player_detailpage&wmode=transparent" frameborder="0" allowfullscreen ></iframe> -->
+          </div>
+          <div class="span6">
             {% if user.is_anonymous %}
-            <div class="row-fluid">
-                <div class="span12">
-                    <div class="span5">
-                        <iframe width="460" height="360" src="http://www.youtube.com/embed/0VNBhxwo6yQ?feature=player_detailpage&wmode=transparent" frameborder="0" allowfullscreen ></iframe>
-                        </div>
-                    <div class="span6">
-
-                        {% if user.is_anonymous %}
-                        Inicia Sesión!
-
-                        <form action="/login" method="post">
-                            {% csrf_token %}
-                            {{login_form.as_p}}
-                            <input type="submit" value="Ingresar">
-                        </form>
-                        <a href="#myModal" role="button" class="btn" data-toggle="modal">Registrate</a>
-                        {% endif %}
-                        <!-- Button to trigger modal -->
-                        
-                         
-                        <!-- Modal -->
-                        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h3 id="myModalLabel">Formulario de Registro</h3>
-                          </div>
-                          <div class="modal-body">
-                            <form action="/crear/usuario" method="post">
-                                {% csrf_token %}
-                                {{regis_form.as_p}}
-                              <div class="modal-footer">
-                                <button type="submit"class="btn btn-primary">Crear</button>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                        <!-- Fin Modal -->
-                    </div>
-                </div>
-            </div>
+            <h3>Inicia Sesión!</h3>
+            <form action="/login" method="post">
+                {% csrf_token %}
+                {{login_form.as_p}}
+                <input type="submit" class="btn" value="Ingresar">
+            </form>
+            <a href="#myModal" role="button" class="btn" data-toggle="modal">Registrate</a>
             {% endif %}
-              <div class="span12">
-                <table class="table table-hover table-condensed">
-                  <thead> 
-                  <tr>
-                  <td>Foto</td>
-                  <td>Nombre profesor</td>
-                  <td>Idioma</td>
-                  <td>Pruebalo!</td>
+            <!-- Modal para registro-->
+            <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Formulario de Registro</h3>
+              </div>
+              <div class="modal-body">
+                <form action="/crear/usuario" method="post">
+                    {% csrf_token %}
+                    {{regis_form.as_p}}
+                  <div class="modal-footer">
+                    <button type="submit"class="btn btn-primary">Registrarse</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <table class="table table-hover table-condensed">
+          <thead> 
+            <tr>
+              <td>Foto</td>
+              <td>Nombre profesor</td>
+              <td>Idioma</td>
+              <td>Pruebalo!</td>
+            </tr>
+          </thead>                   
+          <tbody>
+            {% if cursos %}
+              <h3 class= "titulo">Cursos disponibles</h3>
+              {% for curso in cursos %}
+                <div class=“cursos”>
+                  <tr class = "success">
+                    <td><img data-src="holder.js/140x140" alt="140x140" class="img-rounded" id="me"  style="width: 100px; height: 100px;"src="{{STATIC_URL}}/skypi.jpg" /></td>
+                    <td class="lead">{{curso.profesor.user.username}}</td>
+                    <td class="lead">{{curso.idioma}}</td>
+                    <td><a href="#myModal" role="button" class="btn" data-toggle="modal">Contratar</a></td>
                   </tr>
-                  </thead>                   
-                  <tbody>
-                  {% if cursos %}
-                    <h3>Si hay cursos</h3>
-                    {% for curso in cursos %}
-                      <div class=“cursos”>
-                        <tr>
-                        <td><img alt="80x80" class="img-rounded" id="me" src="{{STATIC_URL}}/skypi.jpg" /></td>
-                        <td>{{curso.profesor.user.username}}</td>
-                        <td>{{curso.idioma}}</td>
-                        <td><a href="#myModal" role="button" class="btn" data-toggle="modal">Contratar</a></td>                    
-                        </tr>
-                      </div>
-                    {% endfor %}
-                  {% else %}
-                    <h3>No hay cursos</h3>
-                  {% endif %}
-
-                  </tbody>
-                </table>
                 </div>
+              {% endfor %}
+            {% else %}
+              <h3>No hay cursos</h3>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 {% endblock %}

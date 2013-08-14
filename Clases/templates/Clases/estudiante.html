@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block MAIN %}
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="tabbable tabs-left">      
+				<ul id="myTab" class="nav nav-tabs">
+					<li class="active"><a href="#clases" data-toggle="tab">Clases</a></li>
+					<li><a href="#cursos" data-toggle="tab">Mis Cursos</a></li>
+					<li><a href="#informacion" data-toggle="tab">Informacion</a></li>
+					<li class="dropdown "><a href="#" class="dropdown-toggle" data-toggle="dropdown">Clases <b class="caret"></b></a>
+	                <ul class="dropdown-menu">
+	                  <li class=""><a href="#clases" data-toggle="tab">Clases realizadas</a></li>
+	                  <li class=""><a href="#clases2" data-toggle="tab">Proximas Clases</a></li>
+	                </ul>
+              </li>
+				</ul>
+				<div id="myTabContent" class="tab-content">
+				  <div class="tab-pane fade  in active" id="clases">
+		            {% if clases%}
+		              <h3>Mis Clases</h3>
+		              <table class="table table-hover table-condensed">
+		                <thead> 
+		                  <tr>
+		                    <td>Curso</td>
+		                    <td>Nombre</td>
+		                    <td>Dia</td>
+		                    <td>Hora</td>
+		                    <td>Estado</td>
+		                    <td>Entrar</td>
+		                  </tr>
+		                </thead>                   
+		                <tbody>
+		                  {% for clase in clases %}
+		                    {% for clas in clase%}
+	                    		{% if clas.estado = 'activa'%} 
+		                       		<div class= "claseactiva">
+		                        	<tr>
+			                        <td>{{clas.curso.nombre}}</td>
+			                        <td>{{clas.nombre}}</td>
+			                        <td>{{clas.dia}}</td>
+			                        <td>{{clas.hora}}</td>
+			                        <td>{{clas.estado}}</td>                      
+		                        	<td><a href="{{clas.hangout}}" trole="button" class="btn">Entrar</a></td>
+		                        	<td>Espera</td>			                    
+		                        	</tr>		                      
+		                        	</div>
+		                        {%else%}
+			                        <div>
+				                        <tr>
+				                          <td>{{clas.curso.nombre}}</td>
+				                          <td>{{clas.nombre}}</td>
+				                          <td>{{clas.dia}}</td>
+				                          <td>{{clas.hora}}</td>
+				                          <td>{{clas.estado}}</td>   
+				                          <td>Espera</td>
+				                        </tr>
+			                        </div>		                      
+		                      {%endif%}
+		                    {%endfor%}
+		                  {% endfor %}
+		                </tbody>
+		                </table>
+		            {% else %}
+		              <h3>No Tienes Clases asociadas </h3>
+		            {% endif %}				  	
+				  </div>	
+
+
+				  <div class="tab-pane fade" id="informacion">
+				    <p class="info_profesor">Bienvenido don señor cliente</p>
+				  </div>
+				  <div class="tab-pane fade" id="cursos">
+		            {% if cursos %}
+		              <h3>Cursos que en los que estoy matriculado</h3>
+		              <table class="table table-hover table-condensed">
+		                <thead> 
+		                  <tr>
+		                    <td>Idioma</td>
+		                    <td>Nombre del Curso</td>
+		                    <td>Inscritos</td>
+		                    <td>Estado</td>
+		                  </tr>
+		                </thead>                   
+		                <tbody>
+		                  {% for curso in cursos %}
+		                    <div class=“cursos”>
+		                      <tr>
+		                        <td>{{curso.curso.idioma}}</td>
+		                        <td>{{curso.curso.nombre}}</td>
+		                        <td>{{curso.curso.miembros}}</td>
+		                        <td>{{curso.curso.estado}}</td>
+		                      </tr>
+		                    </div>
+		                  {% endfor %}
+		                </tbody>
+		                </table>
+		            {% else %}
+		              <h3>No estoy matriculado en ningun curso</h3>
+		            {% endif %}				  	
+				  </div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

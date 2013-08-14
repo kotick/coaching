@@ -1,27 +1,115 @@
 {% extends 'base.html' %}
 {% block MAIN %}
-              <div class="span12">
-                <table class="table table-hover table-condensed">
-                  <thead> 
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="tabbable tabs-left">      
+        <ul id="myTab" class="nav nav-tabs">
+          <li class="active"><a href="#informacion" data-toggle="tab">Informacion</a></li>
+          <li><a href="#crear" data-toggle="tab">Crear un curso</a></li>
+          <li><a href="#curso" data-toggle="tab">Tus Cursos</a></li>
+          <li><a href="#clases" data-toggle="tab">Clases pendientes</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+          <div class="tab-pane fade in active" id="informacion">
+            <p class="info_profesor">Bienvenido don señor profesor</p>
+          </div>
+          <div class="tab-pane fade" id="crear">
+            <form action="/crear/curso" method="post">
+                {% csrf_token %}
+                {{crear_form.as_p}}
+                <input type="submit" class="btn" value="Crear">
+            </form>
+          </div>
+          <div class="tab-pane fade" id="curso">
+            {% if cursos %}
+              <h3>Cursos que imparto</h3>
+              <table class="table table-hover table-condensed">
+                <thead> 
                   <tr>
-                  <td>Foto</td>
-                  <td>Nombre profesor</td>
-                  <td>Idioma</td>
-                  <td>Pruebalo!</td>
+                    <td>Idioma</td>
+                    <td>Nombre del Curso</td>
+                    <td>Inscritos</td>
+                    <td>Estado</td>
                   </tr>
-                  </thead>                   
-                  <tbody>
-                    <h3>Si hay cursos</h3>
+                </thead>                   
+                <tbody>
+                  <h3>Si hay cursos</h3>
+                  {% for curso in cursos %}
+                    <div class=“cursos”>
+                      <tr>
+                        <td>{{curso.idioma}}</td>
+                        <td>{{curso.nombre}}</td>
+                        <td>{{curso.miembros}}</td>
+                        <td>{{curso.estado}}</td>
+                      </tr>
+                    </div>
+                  {% endfor %}
+                </tbody>
+                </table>
+            {% else %}
+              <h3>No hay cursos</h3>
+            {% endif %}
+          </div>
+          <div class="tab-pane fade" id="clases">
+            {% if clases%}
+              <h3>Mis Clases</h3>
+              <table class="table table-hover table-condensed">
+                <thead> 
+                  <tr>
+                    <td>Curso</td>
+                    <td>Nombre</td>
+                    <td>Dia</td>
+                    <td>Hora</td>
+                    <td>Estado</td>
+                    <td>Hangout</td>
+                    <td>Comienza la clase</td>
+                  </tr>
+                </thead>                   
+                <tbody>
+                  {% for clase in clases %}
+                    {% for clas in clase%}
                       <div class=“cursos”>
                         <tr>
-                        <td><!-- img alt="80x80" class="img-rounded" id="me" src="{{STATIC_URL}}/skypi.jpg" --> </td>
-                        <td>{{curso.profesor.user.username}}</td>
-                        <td>{{curso.idioma}}</td>
-                        <td><a href="#myModal" role="button" class="btn" data-toggle="modal">Contratar</a></td>                    
+                          <td>{{clas.curso.nombre}}</td>
+                          <td>{{clas.nombre}}</td>
+                          <td>{{clas.dia}}</td>
+                          <td>{{clas.hora}}</td>
+                          <td>{{clas.estado}}</td> 
+                          <td><a href="http://plus.google.com/hangouts?es-419fplm&hl=es-419" trole="button" class="btn btn-info">Iniciar Hangout</a> </td>
+                          <td><a href="#inicio" trole="button" class="btn" data-toggle="modal">Iniciar Clase</a></td>
+                          <div id="inicio" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="myModalLabel">Iniciar una Clase</h3>
+                          </div>
+                          <div class="modal-body">
+                            <form action="Iniciar/clase/{{clas.id}}/" method="post">
+                              {% csrf_token %}
+                              {{clase_form.as_p}}
+                              <div class="modal-footer">
+                                <button type="submit"class="btn btn-primary">Comenzar</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
                         </tr>
                       </div>
-                    <h3>No hay cursos</h3>
-                  </tbody>
+                    {%endfor%}
+                  {% endfor %}
+                </tbody>
                 </table>
-                </div>
+            {% else %}
+              <h3>No hay cursos</h3>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Modal para Inicio-->
+
+
 {% endblock %}

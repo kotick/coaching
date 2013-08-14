@@ -4,41 +4,39 @@ from django.contrib.auth.models import User
 
 class Profesor(models.Model):
 	user = models.OneToOneField(User,primary_key=True)
-	total = models.CharField(max_length=30)
 
 class Cliente(models.Model):
 	user = models.OneToOneField(User, primary_key=True)
 	boletos = models.IntegerField(max_length=30)
 
-class Clase(models.Model):
-	id = models.AutoField('ID', primary_key=True)
-	hangout = models.CharField(max_length=30)
-	youtube = models.CharField(max_length=30)
-	fecha = models.DateTimeField()
-	estado = models.CharField(max_length=30)
-
-	def __unicode__(self):
-		return self.id
+class Administrador(models.Model):
+	user = models.OneToOneField(User, primary_key=True)
 
 class Curso(models.Model):
-	id = models.AutoField('ID', primary_key=True)
 	nombre = models.CharField(max_length=30)
 	profesor = models.ForeignKey(Profesor)
 	vacantes = models.IntegerField(max_length=10)
 	idioma = models.CharField(max_length=30)
-
-class Curso_clase(models.Model):
-	id = models.AutoField('ID', primary_key=True)
-	curso = models.ForeignKey(Curso)
-	clase = models.ForeignKey(Clase)
+	miembros = models.IntegerField(max_length=10)
+	cantidad_clases = models.IntegerField(max_length=10)
+	dia_inicio = models.CharField(max_length=30)
+	estado =models.CharField(max_length=30)
 
 	def __unicode__(self):
-		return self.id
+		return self.nombre
 
-class Cliente_curso(models.Model):
-	id = models.AutoField('ID', primary_key=True)
+class Clase(models.Model):
+	curso = models.ForeignKey(Curso)
+	nombre  = models.CharField(max_length=30)
+	dia = models.CharField(max_length=30)
+	hora = models.CharField(max_length=30)
+	hangout = models.CharField(max_length=30)
+	youtube = models.CharField(max_length=30)
+	estado = models.CharField(max_length=30)
+
+	def __unicode__(self):
+		return self.nombre
+
+class curso_cliente(models.Model):
 	curso = models.ForeignKey(Curso)
 	cliente = models.ForeignKey(Cliente)
-
-	def __unicode__(self):
-		return self.id

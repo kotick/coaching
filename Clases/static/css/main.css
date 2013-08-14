@@ -1,12 +1,35 @@
-
-
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
 
+.fondo_inicio{
+	border: 1px solid #d0d0d0;
+}	
+.barra{
 
+	height: 77px;
+}
+.pie{
+	text-align: center;
+}
+.bloque{
+	padding-top: 7%;
+	
+}
+.titulo{
+	padding-left: 2%;
+}
 
+.fondo2{
+	background-color: red;
+}
+.quienes{
+	text-align: center;
+}
 
+.claseactiva{
+	color : green;
+}
 
 
 
